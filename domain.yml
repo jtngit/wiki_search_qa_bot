@@ -30,7 +30,7 @@ forms:
 
 responses:
   utter_topic:
-  - text: Hey!  searching? type - "ok go"
+  - text: Hey!  searching from wiki? type - "ok go"
 
   
   utter_did_that_help:

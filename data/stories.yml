@@ -1,0 +1,42 @@
+version: "3.1"
+
+stories:
+
+- story: search topic path 1
+  steps:
+  - intent: greet
+  - action: utter_topic
+  - intent: deny
+  - action: utter_goodbye
+
+- story: search topic path 2
+  steps:
+  - intent: greet
+  - action: utter_topic
+  - intent: go_to_search_topic
+  - action: utter_type_topic
+  - action: topicsearch_form
+  - active_loop: topicsearch_form
+  - slot_was_set:
+    - requested_slot: topicget1
+  - slot_was_set:
+    - topicget1: vincent
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+  - action: validate_topic_form
+
+- story: search topic path 3
+  steps:
+  - intent: change_input_value
+  - action: utter_are_you_sure
+  - intent: change_input_affirm
+  - action: topic_search_delete
+
+- story: search topic path 4
+  steps:
+  - intent: search
+  - action: topic_search_result
+  - action: utter_did_that_help
+  - intent: affirm
+  - action: utter_happy

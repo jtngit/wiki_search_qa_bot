@@ -1,0 +1,67 @@
+version: "3.1"
+
+intents:
+  - greet
+  - goodbye
+  - affirm
+  - deny
+  - bot_challenge
+  - go_to_search_topic
+  - change_input_value
+  - change_input_affirm
+  - search
+
+slots:
+  topicget1:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_text
+      conditions:
+         - active_loop: topicsearch_form
+           requested_slot: topicget1
+
+
+forms:
+  topicsearch_form:
+    required_slots:
+        - topicget1
+       
+
+responses:
+  utter_topic:
+  - text: Hey!  searching? type - "ok go"
+
+  
+  utter_did_that_help:
+  - text: "Did that help you?"
+
+  utter_happy:
+  - text: "Great, carry on!"
+
+  utter_goodbye:
+  - text: "Bye"
+
+  utter_iamabot:
+  - text: "I am a bot, powered by Rasa."
+
+  utter_type_topic:
+  - text: type your topic names please! (multiple topics can enter saparated by comma ',')
+
+  utter_are_you_sure:
+  - text: are you sure to change topic? then type- "i know topics are deleting"
+
+actions:
+- utter_topic
+- utter_type_topic
+- utter_did_that_help
+- utter_happy
+- utter_are_you_sure
+- utter_goodbye
+- topic_search_result
+- topic_search_delete
+- validate_topic_form
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true

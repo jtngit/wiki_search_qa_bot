@@ -29,13 +29,13 @@ class ActionTopicSearch(Action):
 
             # search in wiki #####
             
-            info = wikipedia.summary(topic_search)
+            info = wikipedia.summary(topic_search, auto_suggest=False)
             dispatcher.utter_message(topic_search)
             dispatcher.utter_message(info)
             
             ## save into a file ###
-            with open(f"{topic_search}.txt","w") as file:
-                file.write(info)
+            # with open(f"{topic_search}.txt","w") as file:
+            #     file.write(info)
 
 
         dispatcher.utter_message(text="seach completed sussessfully!!!!")

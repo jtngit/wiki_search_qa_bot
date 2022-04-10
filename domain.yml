@@ -46,7 +46,7 @@ responses:
   - text: "I am a bot, powered by Rasa."
 
   utter_type_topic:
-  - text: type your topic names please! (multiple topics can enter saparated by comma ',')
+  - text: type your topic name please!
 
   utter_are_you_sure:
   - text: are you sure to change topic? then type- "i know topics are deleting"

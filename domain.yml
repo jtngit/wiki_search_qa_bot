@@ -7,8 +7,8 @@ intents:
   - deny
   - bot_challenge
   - go_to_search_topic
-  - change_input_value
-  - change_input_affirm
+  - delete_input_value
+  - delete_input_affirm
   - search
 
 slots:
@@ -21,12 +21,40 @@ slots:
          - active_loop: topicsearch_form
            requested_slot: topicget1
 
+  deltopic:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_text
+      conditions:
+         - active_loop: topic_delete_form
+           requested_slot: deltopic
+
 
 forms:
   topicsearch_form:
     required_slots:
         - topicget1
+
+  topic_delete_form:
+    required_slots:
+        - deltopic
        
+# slots:
+#   deltopic:
+#     type: text
+#     influence_conversation: true
+#     mappings:
+#     - type: from_text
+#       conditions:
+#          - active_loop: topic_delete_form
+#            requested_slot: deltopic
+
+
+# forms:
+#   topic_delete_form:
+#     required_slots:
+#         - deltopic
 
 responses:
   utter_topic:
@@ -48,19 +76,20 @@ responses:
   utter_type_topic:
   - text: type your topic name please!
 
-  utter_are_you_sure:
-  - text: are you sure to change topic? then type- "i know topics are deleting"
+  utter_dele_topic_get:
+  - text: type your topic to delete
 
 actions:
 - utter_topic
 - utter_type_topic
 - utter_did_that_help
 - utter_happy
-- utter_are_you_sure
+- utter_dele_topic_get
 - utter_goodbye
 - topic_search_result
 - topic_search_delete
 - validate_topic_form
+- topic_search_topic_check
 
 session_config:
   session_expiration_time: 60

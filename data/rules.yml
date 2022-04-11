@@ -29,4 +29,22 @@ rules:
      - requested_slot: null
   
   - action: validate_topic_form
+
+# - rule: Activate form
+#   steps:
+#   - intent: delete_input_value
+#   - action: utter_dele_topic_get
+
+#   - action: topic_delete_form
+#   - active_loop: topic_delete_form
+
+# - rule: Submit form
+#   condition:
+#   - active_loop: topic_delete_form
+#   steps:
+#     - action: topic_delete_form
+#   - active_loop: null
+#   - slot_was_set:
+#      - requested_slot: null
   
+#   - action: topic_search_delete

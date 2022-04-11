@@ -12,23 +12,36 @@ def clean_name(name):
 
 def store_topics_in_file(search_topic):
     
-    set_topic.add(search_topic)
-    print(set_topic)
+    fo = open("list_of_topics.txt", "r+")
+    line = fo.read()
+    fo.close()
+    print (line)
+    search_topics_set= set(())
 
-    # save searched topics in a file
-    
+    ### check inside list_of_topics.txt file empty or not #######
+    if line == '':
+        search_topics_set.add(search_topic)
+        print("___________________________________")
+    else:
+        for a in line.split(','):
+            if a != '' :
+                search_topics_set.add(a)
+        search_topics_set.add(search_topic)
+        print("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^")
+
+    ### delete old file and create new file and store ##########
     os.remove("list_of_topics.txt")
     
     with open(f"list_of_topics.txt","w") as file:
         print("<<<<<<<<>>>>>>>>>")
-        for item in set_topic:
+        for item in search_topics_set:
             file.write(item+",")
     print("first **************************************")
-    return set_topic
+    return search_topics_set
 
 
-topics_list= []
-set_topic= set(())
+
+#set_topic= set(())
 class ValidateTopicForm(FormValidationAction):
 
     def name(self) -> Text:
@@ -60,13 +73,15 @@ class ValidateTopicForm(FormValidationAction):
                     
                 print("going correct path")
 
-                set_topic= store_topics_in_file(search_topic)
+                set_topics= store_topics_in_file(search_topic)
 
                 dispatcher.utter_message(text="ok, thanks.")
-                dispatcher.utter_message(text=f"your topics= {set_topic} ")
+                dispatcher.utter_message(text="your topics :")
+                for item in set_topics:
+                    dispatcher.utter_message(item+ ',')
 
 
-                dispatcher.utter_message(text=f"type-  'search' - search topics && 'change' - change/delete entered topics && 'ok go' - add more topics")
+                dispatcher.utter_message(text=f"type: \n 'search' - search topics \n 'delete' - delete entered topic \n 'ok go' - add more topics")
                 
                 return [SlotSet("topicget1", None)]
 
@@ -79,11 +94,13 @@ class ValidateTopicForm(FormValidationAction):
                     with open(f"{search_topic}.txt","w") as file:
                         file.write(info)
 
-                    set_topic= store_topics_in_file(search_topic)
+                    set_topicss= store_topics_in_file(search_topic)
                     dispatcher.utter_message(text="ok, thanks.")
-                    dispatcher.utter_message(text=f"your topics= {set_topic} ")
+                    dispatcher.utter_message(text="your topics :")
+                    for items in set_topicss:
+                        dispatcher.utter_message(items+ ',' )
 
-                    dispatcher.utter_message(text=f"type-  'search' - search topics && 'change' - change/delete entered topics && 'ok go' - add more topics")
+                    dispatcher.utter_message(text=f"type: \n 'search' - search topics \n 'delete' - delete entered topic \n 'ok go' - add more topics")
 
                     return [SlotSet("topicget1", None)]
                 except:

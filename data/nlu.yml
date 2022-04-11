@@ -64,13 +64,10 @@ nlu:
   examples: |
     - ok go
 
-- intent: change_input_value
+- intent: delete_input_value
   examples: |
-    - change
+    - delete
 
-- intent: change_input_affirm
-  examples: |
-    - i know topics are deleting
 
 - intent: search
   examples: |

@@ -5,14 +5,16 @@ stories:
 - story: search topic path 1
   steps:
   - intent: greet
-  - action: utter_topic
+  - action: topic_search_topic_check
+#  - action: utter_topic
   - intent: deny
   - action: utter_goodbye
 
 - story: search topic path 2
   steps:
   - intent: greet
-  - action: utter_topic
+#  - action: utter_topic
+  - action: topic_search_topic_check
   - intent: go_to_search_topic
   - action: utter_type_topic
   - action: topicsearch_form
@@ -26,11 +28,20 @@ stories:
   - active_loop: null
   - action: validate_topic_form
 
-- story: search topic path 3
+- story: Delete topic path 3
   steps:
-  - intent: change_input_value
-  - action: utter_are_you_sure
-  - intent: change_input_affirm
+  - intent: delete_input_value
+  - action: utter_dele_topic_get
+
+  - action: topic_delete_form
+  - active_loop: topic_delete_form
+  - slot_was_set:
+    - requested_slot: deltopic
+  - slot_was_set:
+    - deltopic: vincent
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
   - action: topic_search_delete
 
 - story: search topic path 4

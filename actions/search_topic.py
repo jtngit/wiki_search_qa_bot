@@ -15,7 +15,9 @@ class ActionTopicSearch(Action):
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
-            fo = open("list_of_topics.txt", "r+")
+            id_of_user = tracker.sender_id
+
+            fo = open(f"{id_of_user}.txt", "r+")
             line = fo.read()
             fo.close()
             print (line)
@@ -32,7 +34,7 @@ class ActionTopicSearch(Action):
 
                 for names in search_topics_set:
                     dispatcher.utter_message(names)
-                    file = open(f"{names}.txt", "r+")
+                    file = open(f"{id_of_user}{names}.txt", "r+")
                     lines = file.read()
                     file.close()
                     dispatcher.utter_message(lines)

@@ -29,6 +29,7 @@ nlu:
     - see you around
     - bye bye
     - see you later
+    - ok
 
 - intent: affirm
   examples: |
@@ -72,3 +73,11 @@ nlu:
 - intent: search
   examples: |
     - search
+
+- intent: delete_all_topics
+  examples: |
+    - clear
+
+- intent: double_check
+  examples: |
+    - i know all are removed permanently

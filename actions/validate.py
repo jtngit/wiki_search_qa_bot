@@ -10,9 +10,9 @@ import os
 def clean_name(name):
     return "".join([c for c in name if c.isalpha()])
 
-def store_topics_in_file(search_topic):
+def store_topics_in_file(search_topic,user_id_identify):
     
-    fo = open("list_of_topics.txt", "r+")
+    fo = open(f"{user_id_identify}.txt", "r+")
     line = fo.read()
     fo.close()
     print (line)
@@ -30,9 +30,9 @@ def store_topics_in_file(search_topic):
         print("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^")
 
     ### delete old file and create new file and store ##########
-    os.remove("list_of_topics.txt")
+    os.remove(f"{user_id_identify}.txt")
     
-    with open(f"list_of_topics.txt","w") as file:
+    with open(f"{user_id_identify}.txt","w") as file:
         print("<<<<<<<<>>>>>>>>>")
         for item in search_topics_set:
             file.write(item+",")
@@ -41,7 +41,7 @@ def store_topics_in_file(search_topic):
 
 
 
-#set_topic= set(())
+        
 class ValidateTopicForm(FormValidationAction):
 
     def name(self) -> Text:
@@ -55,6 +55,7 @@ class ValidateTopicForm(FormValidationAction):
 
         ######## Validate `topicget1` value. ########
         search_topic = tracker.get_slot("topicget1")
+        user_id_identify = tracker.sender_id
 
         name = clean_name(search_topic)
         if len(name) == 0:
@@ -68,12 +69,12 @@ class ValidateTopicForm(FormValidationAction):
                 info = wikipedia.summary(name, auto_suggest=False)
 
                 ## save into a file ###
-                with open(f"{search_topic}.txt","w") as file:
+                with open(f"{user_id_identify}{search_topic}.txt","w") as file:
                     file.write(info)
                     
                 print("going correct path")
 
-                set_topics= store_topics_in_file(search_topic)
+                set_topics= store_topics_in_file(search_topic,user_id_identify)
 
                 dispatcher.utter_message(text="ok, thanks.")
                 dispatcher.utter_message(text="your topics :")
@@ -81,7 +82,7 @@ class ValidateTopicForm(FormValidationAction):
                     dispatcher.utter_message(item+ ',')
 
 
-                dispatcher.utter_message(text=f"type: \n 'search' - search topics \n 'delete' - delete entered topic \n 'ok go' - add more topics")
+                dispatcher.utter_message(text=f"type: \n 'search' - search topics \n 'delete' - delete a specific topic \n 'ok go' - add more topics \n 'clear'- remove all topics you are added")
                 
                 return [SlotSet("topicget1", None)]
 
@@ -91,16 +92,16 @@ class ValidateTopicForm(FormValidationAction):
                     ## wiki without with auto suggesion
                     info= wikipedia.summary(name)
 
-                    with open(f"{search_topic}.txt","w") as file:
+                    with open(f"{user_id_identify}{search_topic}.txt","w") as file:
                         file.write(info)
 
-                    set_topicss= store_topics_in_file(search_topic)
+                    set_topicss= store_topics_in_file(search_topic,user_id_identify)
                     dispatcher.utter_message(text="ok, thanks.")
                     dispatcher.utter_message(text="your topics :")
                     for items in set_topicss:
                         dispatcher.utter_message(items+ ',' )
 
-                    dispatcher.utter_message(text=f"type: \n 'search' - search topics \n 'delete' - delete entered topic \n 'ok go' - add more topics")
+                    dispatcher.utter_message(text=f"type: \n 'search' - search topics \n 'delete' - delete a specific topic \n 'ok go' - add more topics \n 'clear'- remove all topics you are added")
 
                     return [SlotSet("topicget1", None)]
                 except:

@@ -6,14 +6,12 @@ stories:
   steps:
   - intent: greet
   - action: topic_search_topic_check
-#  - action: utter_topic
   - intent: deny
   - action: utter_goodbye
 
 - story: search topic path 2
   steps:
   - intent: greet
-#  - action: utter_topic
   - action: topic_search_topic_check
   - intent: go_to_search_topic
   - action: utter_type_topic
@@ -51,3 +49,10 @@ stories:
   - action: utter_did_that_help
   - intent: affirm
   - action: utter_happy
+
+- story: delete topic path 5
+  steps:
+  - intent: delete_all_topics
+  - action: utter_delete_all
+  - intent: double_check
+  - action: delete_all_topics

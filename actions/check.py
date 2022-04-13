@@ -1,4 +1,3 @@
-import re
 from typing import Any, Text, Dict, List
 
 from rasa_sdk import Action, Tracker
@@ -10,13 +9,29 @@ class ActionTopicsCheck(Action):
     def name(self) -> Text:
         return "topic_search_topic_check"
 
+
+
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
-            fo = open("list_of_topics.txt", "r+")
-            line = fo.read()
-            fo.close()
+
+            id_of_user = tracker.sender_id
+            print(f"user id is ={id_of_user}")
+            
+
+            try:
+                fo = open(f"{id_of_user}.txt", "r+")
+                line = fo.read()
+                fo.close()
+            except:
+                with open(f"{id_of_user}.txt","w") as file:
+                    file.write('')
+                    file.close()
+                    fo = open(f"{id_of_user}.txt", "r+")
+                    line = fo.read()
+                    fo.close()
+
             print (line)
             search_topic= set(())
             for a in line.split(','):
@@ -29,7 +44,7 @@ class ActionTopicsCheck(Action):
                 dispatcher.utter_message(text="your topics :")
                 for item in search_topic:
                     dispatcher.utter_message(item+ ',')
-                dispatcher.utter_message(text="type: \n 'search' - search topics \n 'delete' - delete entered topic \n 'ok go' - add more topics")
+                dispatcher.utter_message(text="type: \n 'search' - search topics \n 'delete' - delete a specific topic \n 'ok go' - add more topics \n 'clear'- remove all topics you are added")
 
             return []
             

@@ -10,6 +10,8 @@ intents:
   - delete_input_value
   - delete_input_affirm
   - search
+  - delete_all_topics
+  - double_check
 
 slots:
   topicget1:
@@ -40,21 +42,7 @@ forms:
     required_slots:
         - deltopic
        
-# slots:
-#   deltopic:
-#     type: text
-#     influence_conversation: true
-#     mappings:
-#     - type: from_text
-#       conditions:
-#          - active_loop: topic_delete_form
-#            requested_slot: deltopic
 
-
-# forms:
-#   topic_delete_form:
-#     required_slots:
-#         - deltopic
 
 responses:
   utter_topic:
@@ -71,13 +59,16 @@ responses:
   - text: "Bye"
 
   utter_iamabot:
-  - text: "I am a bot, powered by Rasa."
+  - text: "I am a bot, powered by Rasa, created by jtngit"
 
   utter_type_topic:
   - text: type your topic name please!
 
   utter_dele_topic_get:
   - text: type your topic to delete
+
+  utter_delete_all:
+  - text: are you sure then type- 'i know all are removed permanently'
 
 actions:
 - utter_topic
@@ -90,6 +81,7 @@ actions:
 - topic_search_delete
 - validate_topic_form
 - topic_search_topic_check
+- delete_all_topics
 
 session_config:
   session_expiration_time: 60

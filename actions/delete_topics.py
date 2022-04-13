@@ -14,9 +14,12 @@ class ActionDeleteTopics(Action):
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
+
+            id_of_user = tracker.sender_id
+
             delete_topic = tracker.get_slot("deltopic")
 
-            fo = open("list_of_topics.txt", "r+")
+            fo = open(f"{id_of_user}.txt", "r+")
             print ("Name of the file: ", fo.name)
 
             line = fo.read()
@@ -40,24 +43,24 @@ class ActionDeleteTopics(Action):
                 print("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<")
                 print(search_topic)
                 print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
-                os.remove("list_of_topics.txt")
+                os.remove(f"{id_of_user}.txt")
                 
                 
     
-                with open(f"list_of_topics.txt","w") as file:
+                with open(f"{id_of_user}.txt","w") as file:
                     for item in search_topic:
                         file.write(item+",")
                 
-                os.remove(f"{delete_topic}.txt")
+                os.remove(f"{id_of_user}{delete_topic}.txt")
                 
                 dispatcher.utter_message(text="deleted successfully")
                 dispatcher.utter_message(text="your topics :")
                 for item in search_topic:
                     dispatcher.utter_message(item+ ',')
-                dispatcher.utter_message(text=f"type: \n 'search' - search topics \n 'delete' - delete entered topic \n 'ok go' - add more topics")
+                dispatcher.utter_message(text=f"type: \n 'search' - search topics \n 'delete' - delete a specific topic \n 'ok go' - add more topics \n 'clear'- remove all topics you are added")
             except:
                 dispatcher.utter_message(text="give a valid topic name")
-                dispatcher.utter_message(text=f"type: \n 'search' - search topics \n 'delete' - delete entered topic \n 'ok go' - add more topics")
+                dispatcher.utter_message(text=f"type: \n 'search' - search topics \n 'delete' - delete a specific topic \n 'ok go' - add more topics \n 'clear'- remove all topics you are added")
 
 
 
